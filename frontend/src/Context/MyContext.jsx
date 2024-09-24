@@ -3,10 +3,11 @@ import { createContext, useEffect, useState } from "react";
 export const MyContext = createContext({});
 
 const urlBase = "http://localhost:5000/api";
+const initialStateToken = localStorage.getItem("token") || null; 
 
 export const UserProvider = ({ children }) => {
     const [email, setEmail] = useState("");
-    const [token, setToken] = useState(localStorage.getItem("token"));
+    const [token, setToken] = useState(initialStateToken);
     useEffect(() => {
         if (token) {
           localStorage.setItem("token", token);
@@ -29,5 +30,5 @@ export const UserProvider = ({ children }) => {
     return data;
   };
 
-  return <MyContext.Provider value={{validarLogin}}>{children}</MyContext.Provider>;
+  return <MyContext.Provider value={{validarLogin, email}}>{children}</MyContext.Provider>;
 };
